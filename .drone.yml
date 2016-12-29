@@ -9,7 +9,7 @@ pipeline:
     image: plugins/downstream
     server: https://ci.toroid.io
     repositories:
-      - drone-plugins/kicad
+      - ToroidDockerImages/kicad
     when:
       event: push
       success: true
