@@ -1,0 +1,16 @@
+pipeline:
+  docker:
+    image: plugins/docker
+    repo: toroid/kicad-base
+    tags:
+      - latest
+
+  notify:
+    image: plugins/downstream
+    server: https://ci.toroid.io
+    repositories:
+      - drone-plugins/kicad
+    when:
+      event: push
+      success: true
+      branch: master
