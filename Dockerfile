@@ -37,3 +37,5 @@ RUN sudo paccache -ruk0
 RUN sudo mkdir -p /root/.config/kicad && \
 	sudo cp /usr/share/kicad/template/sym-lib-table /root/.config/kicad && \
 	sudo cp /usr/share/kicad/template/fp-lib-table /root/.config/kicad
+
+USER root
