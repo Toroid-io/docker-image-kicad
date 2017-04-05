@@ -12,7 +12,7 @@ pipeline:
     server: https://ci.toroid.io
     repositories:
       - drone-plugins/drone-kicad
-    tags: [latest, 0.1.${DRONE_BUILD_NUMBER}]
+    tags: [latest, 0.1.$DRONE_BUILD_NUMBER]
     when:
       event: push
       success: true
