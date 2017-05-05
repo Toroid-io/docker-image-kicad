@@ -1,0 +1,26 @@
+sudo: required
+language: c
+services:
+- docker
+env:
+  global:
+  - COMMIT=${TRAVIS_COMMIT::8}
+  - secure: p31X8T0Wv5nBQhFZTAgtVcIHz/E9SidpQ7pjGwcjni7VLCEfpoj2Vw4d483+tkMnzYBU4gx+Eiq1MAadYYcSmRTsqpidMx+/7m//7UvrJti1TAdGFH5lTXHl7x39LrYfbpmdRhb9xULjB9ae+4uJBlEeJZ4Mptu5CfY2JANJixhsXzH7pas7L0spRULHKnx1857XZozoXSdAG8r0n+jAtzEd6QVM6wjZqo7N6S05nvPX/YWpMzbEkN421KOyAGwuv+Bve5DZOzVX2JWxU0cOBF2jov64StGCyRafv8cJYGVLXGCrYNH1DddueCmh6QknN3OpcX6jhWC4h8AqYLGtsRJjGERUWk/tjUrrplfIT/4HTKM5Emkf2zsIFqudajI9rpeCUHmHECois4toy0C5EG2C3PngmX8mg+96ryCvGCG36WR6yzgCnPPEOVsDuyQzFlsgDckuyrwTJkEsuiXlx2UDEr0zrh4KZow5Ranvore4NIYz4HUy+GJGtrGnRuGXXhvqUKPvBk6DzZuH4Pu6Jzn6sky6XcHUvFF39PVdOgHEEM2zvAuNcWFMf3ItLiaBRKcczMo0wA12sXE6TBBcumrQCYKHrcfNepv7XILFNMR9BYYBiqrs6GDAyS/klD7v6zqQnC9zd0dSPpV1ubmEheSzz2/cUcq8raH5hx9uUGQ=
+  - secure: RPmJPzVvoOfVseKXg5GalFhkMSOkwRGHxdSAtkM2aRUSIGQrjPu0X1LIryPSbP2Ds3o2RH4e+ed0JTcS0UQx6LaVSNT7IsvXo4YrEMutKOe/Koy1zTuhstL54ix/Vo9MCgdVFtISywTXJegp3Cl27CCemQ8HPHVOF+1BuavuDMTepL70+IVnKEKA2UdPhUyRmkcy+i6a2RTDjkBfgsRTEgbCkRdwvfbULhO2xHQMGDyQrfxj7VbYJItCkRvTGYCjKPZ4ggwM2V16KhJOUir5I+QicAPKIpAroSd8c5wiSBMMNIfFnseGxkgfc4aZsM7/fZNGjBjBvQVdAbSlU3Vt7oHyWPNSVBl6s65P0B1O3HBkzODKpvppvCANMLe+9+6j0W7nGejIrFaMIH+5W4onFidXdaNAgAV7y3jl5BqtIc/qZPkTClSFtaVOr8+O6El18apZ1gqmfHFfNigW+i22HxPcjpxS80XfwW6Hm3p4nGwSzMJpBlvhDZU7NUIQ8z8TAz1IyBtQWAX4DxcdIYSgSKj0T0BhqEaNSQiSLc36KJdCaN5XUCgJ7sF9sBF5gUe3MHySNU0q1iEI7kuTVoUYB6tVtaChQ8fwUJBn/6tv8qdc2DVbQlvnVGg2yL5DXn6XR98GdfWFsX8vIFOEv+uC5IgsA3cvLoXTEXOlXJ/TxRs=
+  - secure: ZHKAz+gNrB5FITjA2hpPg/YWCDAPMVVlDc4C6yiWbEbFCC1JN7UcUFCTzT1sRpC3+rWMa3h9ICaP0NfugCjYAv/wIlXNePGZ56L5DLNqGvI6gZ3FY9BRzwxk1jpCWFy5mNAhPm0lJRqr+swphmhbNH3Us0lNvdU5CKPzyb+rNk8rMtekSPgvUZXgToyKX7e3o0pcvmZ39+eFaiTNsoN4jBcjthW7kGKUOBINKZTYJlIu63JevCDrmMogcAFTl7cPbJ+45sG5e3N95G4TVu2qu6mUyGwagNPg7OmC36EMxQDk7zHtkIJ5gHKo2wbze9UxoZG1XXk5/CSUbRy5LNRIwSfc9Laprn6Yn7MT2jQGBNeLzFX+KdWFts39ePsJqGBuUkrt528A0U+HU7Nxw/xsW/qC10OSEK0FNURiBdC8+sc82hY9g/yG3rReqpLcma29yA+OFYpWkY4wp4hGbAcIYy/GrUENjybieaUuIMR+sW3MlJUK/EwPiawoZ8TegyH64QYt6OZXby4Jo5h9P9V+xvPAl8l0bRKR2ygsZmRWtZs8MuIDTVeOV1zgFI7cJVr42Ef/x+xjDB9Eg2DaAe9lBaOCxeh8+CihmPaxMf72yqpKpFOpWgRVp6VB+UuAiXR56Bb13AUbvMhL7sWPXU9EXDEz3As3cGx52mGV1SLYAo8=
+before_install: 
+script: true
+notifications:
+  email: false
+after_success:
+- echo $TRAVIS_BRANCH
+- sed -i 's|checkout develop|checkout '"$TRAVIS_BRANCH"'|' Dockerfile
+- docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+- export REPO=toroid/docker-image-kicad
+- export TAG=$(if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo
+  $TRAVIS_BRANCH ; fi)
+- docker pull $REPO:$TAG
+- docker build -f Dockerfile -t $REPO:$COMMIT .
+- docker tag -f $REPO:$COMMIT $REPO:$TAG
+- docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+- docker push $REPO
