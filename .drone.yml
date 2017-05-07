@@ -9,11 +9,11 @@ pipeline:
 
   notify:
     image: plugins/downstream
-    server: https://ci.toroid.io
+    server: https://bianca.toroid.io
     repositories:
-      - drone-plugins/drone-kicad
-    tags: [latest, 0.1.$DRONE_BUILD_NUMBER]
+      - Toroid-io/drone-kicad
+    tags: latest
     when:
       event: push
-      success: true
+      status: success
       branch: master
