@@ -3,14 +3,8 @@ FROM archlinuxjp/archlinux-yaourt
 MAINTAINER am@toroid.io
 
 RUN pacman -Sy
-RUN pacman -S --noconfirm git
-RUN pacman -S --noconfirm base-devel
-RUN pacman -S --noconfirm sudo
-
-RUN pacman -S --noconfirm xorg-server-xvfb
-RUN pacman -S --noconfirm ghostscript
-RUN pacman -S --noconfirm xdotool
-RUN pacman -S --noconfirm recordmydesktop
+RUN pacman -S --noconfirm git base-devel sudo \
+	xorg-server-xvfb ghostscript xdotool recordmydesktop python2-lxml
 
 WORKDIR /kicad
 RUN groupadd -r kicad -g 433
@@ -22,13 +16,7 @@ RUN echo 'kicad ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 USER kicad
 
-#RUN yaourt --getpkgbuild aur/oce
-#RUN cd oce && makepkg -s --noconfirm
-#RUN pacman -U --noconfirm oce/*.tar.xz
-
-RUN yaourt -S --noconfirm aur/kicad-git
-RUN yaourt -S --noconfirm aur/kicad-library-git
-RUN yaourt -S --noconfirm aur/kicad-pretty-git
+RUN yaourt -S --noconfirm aur/kicad-git aur/kicad-library-git aur/kicad-pretty-git
 
 RUN sudo rm -rf /usr/share/kicad/modules/packages3d
 RUN sudo pacman -Rns --noconfirm cmake boost
