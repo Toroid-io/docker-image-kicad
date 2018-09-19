@@ -2,6 +2,7 @@ pipeline:
   docker:
     image: plugins/docker
     repo: toroid/kicad-base
+    registry: docker.io
     tags:
       - latest
     secrets: [docker_username, docker_password]
