@@ -2,13 +2,8 @@ FROM base/archlinux
 
 MAINTAINER am@toroid.io
 
-WORKDIR /kicad
-COPY ./generate_fp_lib_table.sh ./generate_sym_lib_table.sh /kicad/
-RUN groupadd -r kicad -g 433
-RUN useradd -u 431 -r -g kicad -d /kicad -s /sbin/nologin -c "Docker image user" kicad
-RUN chown -R kicad:kicad /kicad
-RUN gpasswd -a kicad wheel
-RUN echo 'kicad ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+WORKDIR /root
+COPY ./generate_fp_lib_table.sh ./generate_sym_lib_table.sh /root/
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
@@ -21,7 +16,5 @@ RUN pacman -Sy && \
 RUN git clone https://github.com/KiCad/kicad-symbols.git /usr/share/kicad/library
 RUN git clone https://github.com/KiCad/kicad-footprints.git /usr/share/kicad/footprints
 
-USER kicad
-
-RUN mkdir -p /kicad/.config/kicad
+RUN mkdir -p /root/.config/kicad
 RUN ./generate_fp_lib_table.sh && ./generate_sym_lib_table.sh
