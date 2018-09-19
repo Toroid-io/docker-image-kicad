@@ -6,6 +6,7 @@ pipeline:
     experimental: true
     tags:
       - latest
+    secrets: [docker_username, docker_password]
 
   notify:
     image: plugins/downstream
