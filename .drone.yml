@@ -13,6 +13,7 @@ pipeline:
     repositories:
       - Toroid-io/drone-kicad
     tags: latest
+    secrets: [downstream_token]
     when:
       event: push
       status: success
