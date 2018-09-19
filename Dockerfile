@@ -10,7 +10,7 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN pacman -Sy && \
     pacman -S --noconfirm git sudo && \
     pacman -S --noconfirm xorg-server-xvfb ghostscript xdotool recordmydesktop python2-lxml xorg-fonts-type1 && \
-    pacman -S --noconfirm kicad && \
+    pacman -S --noconfirm kicad python2-numpy && \
     pacman -Scc
 
 RUN git clone https://github.com/KiCad/kicad-symbols.git /usr/share/kicad/library
