@@ -2,8 +2,6 @@ pipeline:
   docker:
     image: plugins/docker
     repo: toroid/kicad-base
-    squash: true
-    experimental: true
     tags:
       - latest
     secrets: [docker_username, docker_password]
