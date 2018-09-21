@@ -1,3 +1,3 @@
-# toroid-kicad
+# toroid/kicad-base
 
-Docker image based on Arch Linux with (almost) latest dev KiCad version
+Docker image based on Arch Linux with KiCAD v5
