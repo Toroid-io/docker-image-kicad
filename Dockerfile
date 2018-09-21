@@ -15,6 +15,7 @@ RUN pacman -Sy && \
 
 RUN git clone https://github.com/KiCad/kicad-symbols.git /usr/share/kicad/library
 RUN git clone https://github.com/KiCad/kicad-footprints.git /usr/share/kicad/footprints
+RUN mkdir /usr/share/kicad/modules && git clone https://github.com/KiCad/kicad-packages3D.git /usr/share/kicad/modules/packages3D
 
 RUN mkdir -p /root/.config/kicad
 RUN ./generate_fp_lib_table.sh && ./generate_sym_lib_table.sh
