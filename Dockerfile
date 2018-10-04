@@ -3,7 +3,10 @@ FROM base/archlinux
 MAINTAINER am@toroid.io
 
 WORKDIR /root
-COPY ./generate_fp_lib_table.sh ./generate_sym_lib_table.sh /root/
+COPY  ./generate_fp_lib_table.sh \
+      ./generate_sym_lib_table.sh \
+      ./generate_pcbnew_conf.sh \
+      /root/
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
@@ -17,4 +20,6 @@ RUN git clone https://github.com/KiCad/kicad-symbols.git /usr/share/kicad/librar
 RUN git clone https://github.com/KiCad/kicad-footprints.git /usr/share/kicad/footprints
 
 RUN mkdir -p /root/.config/kicad
-RUN ./generate_fp_lib_table.sh && ./generate_sym_lib_table.sh
+RUN ./generate_fp_lib_table.sh && \
+    ./generate_sym_lib_table.sh && \
+    ./generate_pcbnew_conf.sh
