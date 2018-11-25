@@ -6,6 +6,7 @@ WORKDIR /root
 COPY  ./generate_fp_lib_table.sh \
       ./generate_sym_lib_table.sh \
       ./generate_pcbnew_conf.sh \
+      ./generate_eeschema_conf.sh \
       /root/
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -24,4 +25,5 @@ RUN curl -o /usr/lib/kicad/plugins/bom2csv.xsl \
 RUN mkdir -p /root/.config/kicad
 RUN ./generate_fp_lib_table.sh && \
     ./generate_sym_lib_table.sh && \
-    ./generate_pcbnew_conf.sh
+    ./generate_pcbnew_conf.sh && \
+    ./generate_eeschema_conf.sh
