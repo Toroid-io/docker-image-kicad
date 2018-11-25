@@ -1,19 +1,20 @@
 pipeline:
-  docker:
+  publish:
     image: plugins/docker
     repo: toroid/kicad-base
-    registry: docker.io
     tags: [latest, 5.0.1]
+    when:
+      branch: master
+      event: deployment
+      environment: production
     secrets: [docker_username, docker_password]
 
-  notify:
-    image: plugins/downstream
-    server: https://bianca.toroid.io
-    repositories:
-      - Toroid-io/drone-kicad
-    tags: latest
-    secrets: [downstream_token]
+  publish-test:
+    image: plugins/docker
+    repo: toroid/kicad-base
+    tags: ${DRONE_DEPLOY_TO}
     when:
-      event: push
-      status: success
-      branch: master
+      event: deployment
+      environment:
+        exclude: production
+    secrets: [docker_username, docker_password]
